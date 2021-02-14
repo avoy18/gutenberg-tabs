@@ -11,6 +11,7 @@
 import "./editor.scss";
 import "./style.scss";
 import { TextareaControl } from '@wordpress/components';
+import { TextControl } from '@wordpress/components';
 import { Button } from "@wordpress/components";
 import { PanelBody } from "@wordpress/components";
 import { Card, CardBody, CardDivider } from "@wordpress/components";
@@ -113,6 +114,7 @@ registerBlockType("cgb/block-anton-blocks", {
 		// 	console.log(props.tabHTML);
 		// };
 		
+		console.log(props.attributes.tabs);
 
 		const addNewTab = function () {
 			console.log('Add')
@@ -135,11 +137,11 @@ registerBlockType("cgb/block-anton-blocks", {
 		};
 
 		const removeNewTab = function (index) {
-
+			console.log(index)
 			if (props.attributes.tabs) {
 				let newTabs = [...props.attributes.tabs];
 
-				newTabs = props.attributes.tabs.splice(index, 1);
+				newTabs = newTabs.filter( (curr, i) =>{ return i !== index } );
 
 				console.log('===New Tabs v=====')
 				console.log(newTabs)
@@ -153,8 +155,13 @@ registerBlockType("cgb/block-anton-blocks", {
 	
 		};
 
-		const updateField = function(index, field, value) {
-			console.log(index, field, value)
+		const updateField = function(index, field, theVal) {
+			let newTabs = [...props.attributes.tabs];
+			newTabs[index][field] = theVal;
+
+			props.setAttributes({
+				tabs: newTabs,
+			});
 		}
 
 		return (
@@ -170,26 +177,28 @@ registerBlockType("cgb/block-anton-blocks", {
 								<div key={i}>
 									<CardBody>
 										<div className="form-group">
-											<label htmlFor={titleID}>Title</label>
-											<br />
-											<input
+											<TextControl
+												label="Title"
+												value={ tab.title }
+												onChange={ (val) => { updateField(i,'title', val) } }
+											/>
+											{/* <input
 												id={titleID}
 												name={titleID}
 												type="text"
-												// value={tab.title}
-											/>
+												value={tab.title}
+											/> */}
 										</div>
 										<div className="form-group">
-											<label htmlFor={textID}>Text</label>
-											<br />
-											<textarea 
+											<TextareaControl 
+											label="Text"
 											name={textID} 
 											id={textID} 
-											onblur={ (e) => { updateField(i, 'text', ) } }
+											onChange={ (val) => { updateField(i,'text', val) } }
 											cols="30" 
 											rows="10">
 												{tab.text}
-											</textarea>
+											</TextareaControl>
 										</div>
 										<Button 
 											onClick={() => removeNewTab(i)} isTertiary>
