@@ -77,14 +77,25 @@ function anton_blocks_cgb_block_assets() { // phpcs:ignore
 	register_block_type(
 		'cgb/block-anton-blocks', array(
 			// Enqueue blocks.style.build.css on both frontend & backend.
-			'style'         => 'anton_blocks-cgb-style-css',
+			'style'         	=> 'anton_blocks-cgb-style-css',
 			// Enqueue blocks.build.js in the editor only.
-			'editor_script' => 'anton_blocks-cgb-block-js',
+			'editor_script' 	=> 'anton_blocks-cgb-block-js',
 			// Enqueue blocks.editor.build.css in the editor only.
-			'editor_style'  => 'anton_blocks-cgb-block-editor-css',
+			'editor_style'  	=> 'anton_blocks-cgb-block-editor-css',
+			'render_callback' 	=> 'anton_render_tabs'
 		)
 	);
 }
 
 // Hook: Block assets.
 add_action( 'init', 'anton_blocks_cgb_block_assets' );
+
+function anton_render_tabs($attr){
+	
+	ob_start();
+	include_once plugin_dir_path(__FILE__) . 'partials/tabs-frontend.php';
+	$includedhtml = ob_get_contents();
+    ob_end_clean();
+
+	return $includedhtml;
+}
