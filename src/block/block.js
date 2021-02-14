@@ -1,5 +1,3 @@
-/* eslint-disable no-alert, no-console */
-
 /**
  * BLOCK: anton-blocks
  *
@@ -66,58 +64,8 @@ registerBlockType("cgb/block-anton-blocks", {
 	 * @returns {Mixed} JSX Component.
 	 */
 	edit: (props) => {
-		// Creates a <p class='wp-block-cgb-block-anton-blocks'></p>.
-		// console.log("this runs");
-
-		// const renderTabs = function () {
-		// 	console.log("********************redner poshel");
-		// 	let allTabsHTML = [];
-			
-		// 		props.attributes.tabs.map((tab, i) => {
-		// 			const titleID = i + "_title";
-		// 			const textID = i + "_text";
-		// 			allTabsHTML[i] = (
-		// 				<div key={i}>
-		// 					<CardBody>
-		// 						<div className="form-group">
-		// 							<label htmlFor={titleID}>Title</label>
-		// 							<br />
-		// 							<input
-		// 								id={titleID}
-		// 								name={titleID}
-		// 								type="text"
-		// 								// value={tab.title}
-		// 							/>
-		// 						</div>
-		// 						<div className="form-group">
-		// 							<label htmlFor={textID}>Text</label>
-		// 							<br />
-		// 							<textarea name={textID} id={textID} cols="30" rows="10">
-		// 								{tab.text}
-		// 							</textarea>
-		// 						</div>
-		// 						<Button 
-		// 							onClick={() => removeNewTab(i)} isTertiary>
-		// 							Remove
-		// 						</Button>
-		// 					</CardBody>
-		// 					<CardDivider />
-		// 				</div>
-		// 			);
-		// 		});
-
-		// 	props.setAttributes({
-		// 		tabHTML: allTabsHTML,
-		// 	});
-		// 	console.log('=======')
-		// 	console.log(props.attributes.tabs);
-		// 	console.log(props.tabHTML);
-		// };
-		
-		console.log(props.attributes.tabs);
 
 		const addNewTab = function () {
-			console.log('Add')
 			if (props.attributes.tabs) {
 
 				let newTabs = [...props.attributes.tabs];
@@ -130,21 +78,15 @@ registerBlockType("cgb/block-anton-blocks", {
 				props.setAttributes({
 					tabs: newTabs,
 				});
-				console.log(props.attributes.tabs)
-				// renderTabs();
 				
 			}
 		};
 
 		const removeNewTab = function (index) {
-			console.log(index)
 			if (props.attributes.tabs) {
 				let newTabs = [...props.attributes.tabs];
 
 				newTabs = newTabs.filter( (curr, i) =>{ return i !== index } );
-
-				console.log('===New Tabs v=====')
-				console.log(newTabs)
 
 				props.setAttributes({
 					tabs: newTabs,
